@@ -5,7 +5,7 @@ import CategoryCard from "./CategoryCard";
 const Categories = () => {
 	return (
 		<ScrollView
-			className="px-4 pt-2.5"
+			className="mx-4 pt-2.5"
 			horizontal
 			showsHorizontalScrollIndicator={false}
 		>
