@@ -24,6 +24,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.9",
+		"@types/react-native": "^0.70.6",
 		"tailwindcss": "^3.2.4"
 	},
 	"private": true
