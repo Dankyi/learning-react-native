@@ -3,13 +3,15 @@ import { ArrowRightIcon } from "react-native-heroicons/outline";
 
 import Card from "./Card";
 
+const turquoise = "#00ccbb";
+
 const FeaturedRow = ({ id, title, description }) => {
 	return (
 		<View className="mx-4 mb-4">
 			<View>
 				<View className="flex-row mt-4 justify-between items-center">
 					<Text className="font-bold text-base">{title}</Text>
-					<ArrowRightIcon color="#00ccbb" />
+					<ArrowRightIcon color={turquoise} />
 				</View>
 
 				<Text className="text-gray-600 text-xs mb-1.5">

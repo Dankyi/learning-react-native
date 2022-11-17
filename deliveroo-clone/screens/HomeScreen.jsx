@@ -6,11 +6,13 @@ import {
 	UserIcon,
 	ChevronDownIcon,
 	AdjustmentsVerticalIcon,
-	MagnifyingGlassIcon as MagnifyingGlassIcon
+	MagnifyingGlassIcon
 } from "react-native-heroicons/outline";
 
 import Categories from "../components/Categories";
 import FeaturedRow from "../components/FeaturedRow";
+
+const turquoise = "#00ccbb";
 
 const HomeScreen = () => {
 	const navigation = useNavigation();
@@ -39,18 +41,18 @@ const HomeScreen = () => {
 
 					<Text className="font-bold text-xs">
 						Current Location
-						<ChevronDownIcon size={20} color="#00ccbb" />
+						<ChevronDownIcon size={20} color={turquoise} />
 					</Text>
 				</View>
 
 				<View>
-					<UserIcon size={35} color="#00ccbb" />
+					<UserIcon size={35} color={turquoise} />
 				</View>
 			</View>
 
 			{/* Search */}
 			<View className="flex-row items-center mx-4 space-x-2 pb-2">
-				<View className="flex-row flex-1 p-3 space-x-2 bg-gray-200">
+				<View className="flex-row flex-1 p-3 space-x-2 bg-gray-100">
 					<MagnifyingGlassIcon size={20} color="gray" />
 					<TextInput
 						placeholder="Restaurants and Cuisines"
@@ -59,7 +61,7 @@ const HomeScreen = () => {
 				</View>
 
 				<View>
-					<AdjustmentsVerticalIcon color="#00ccbb" />
+					<AdjustmentsVerticalIcon color={turquoise} />
 				</View>
 			</View>
 

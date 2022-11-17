@@ -18,6 +18,6 @@ const CategoryCard = ({ imgURL, title }) => {
 			</View>
 		</TouchableOpacity>
 	);
-}
+};
 
 export default CategoryCard;

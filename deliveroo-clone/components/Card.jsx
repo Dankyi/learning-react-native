@@ -2,6 +2,8 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { MapPinIcon } from "react-native-heroicons/outline";
 import { StarIcon } from "react-native-heroicons/solid";
 
+const turquoise = "#00ccbb";
+
 const Card = ({
 	id, imgURL, title, rating, description,
 	genre, dishes, address, lng, lat
@@ -17,8 +19,8 @@ const Card = ({
 				<Text className="font-bold text-base">{title}</Text>
 
 				<View className="flex-row items-center space-x-1.5">
-					<StarIcon color="#00ccbb" opacity={0.5} />
-					<Text className="text-green-400">{rating}</Text>
+					<StarIcon color={turquoise} opacity={0.5} />
+					<Text className="text-turquoise">{rating}</Text>
 					<Text className="text-gray-600 text-2xl">&#183;</Text>
 					<Text className="text-gray-600 text-xs">{genre}</Text>
 				</View>
@@ -31,4 +33,5 @@ const Card = ({
 		</TouchableOpacity>
 	);
 };
+
 export default Card;
