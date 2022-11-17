@@ -22,7 +22,7 @@ const HomeScreen = () => {
 	}, [])
 
 	return (
-		<SafeAreaView className="bg-white pt-3">
+		<SafeAreaView className="bg-white pt-3 h-full">
 			{/* Header */}
 			<View className="flex-row pb-3 items-center mx-4 space-x-2">
 				<View>
@@ -64,7 +64,7 @@ const HomeScreen = () => {
 			</View>
 
 			{/* Body */}
-			<ScrollView className="bg-gray-100 pb-28">
+			<ScrollView className="bg-gray-100">
 				<Categories />
 				{/* Offers near you section*/}
 				<FeaturedRow
@@ -87,7 +87,7 @@ const HomeScreen = () => {
 				/>
 			</ScrollView>
 		</SafeAreaView>
-	)
-}
+	);
+};
 
 export default HomeScreen;

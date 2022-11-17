@@ -5,7 +5,7 @@ import Card from "./Card";
 
 const FeaturedRow = ({ id, title, description }) => {
 	return (
-		<View className="mx-4">
+		<View className="mx-4 mb-4">
 			<View>
 				<View className="flex-row mt-4 justify-between items-center">
 					<Text className="font-bold text-base">{title}</Text>
