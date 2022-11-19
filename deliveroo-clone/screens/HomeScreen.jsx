@@ -11,17 +11,41 @@ import {
 
 import Categories from "../components/Categories";
 import FeaturedRow from "../components/FeaturedRow";
+import sanityClient from "../sanity";
 
 const turquoise = "#00ccbb";
 
+const query = `* [_type == "featured"] {
+	...,
+	restaurants[]-> {
+		...,
+		dishes[]->
+	}
+}`;
+
 const HomeScreen = () => {
 	const navigation = useNavigation();
+	const [features, setFeatures] = React.useState([]);
 
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
 			headerShown: false,
 		});
 	}, [])
+
+	React.useEffect(() => {
+		sanityClient.fetch(query)
+			.then(data => setFeatures(data));
+	}, []);
+
+	const allFeatures = features?.map(feature => (
+		<FeaturedRow
+			key={feature._id}
+			id={feature._id}
+			title={feature.name}
+			description={feature.short_description}
+		/>
+	));
 
 	return (
 		<SafeAreaView className="bg-white pt-3 h-full">
@@ -68,25 +92,8 @@ const HomeScreen = () => {
 			{/* Body */}
 			<ScrollView className="bg-gray-100">
 				<Categories />
-				{/* Offers near you section*/}
-				<FeaturedRow
-					id="1"
-					title="Offers near you"
-					description="Why not support your local restaurant tonight!"
-				/>
-				{/* Featured */}
-				<FeaturedRow
-					id="2"
-					title="Featured"
-					description="Paid placement from our partners"
-				/>
 
-				{/* Tasty Discounts */}
-				<FeaturedRow
-					id="3"
-					title="Tasty Discounts"
-					description="Everyone's been enjoying these amazing discounts"
-				/>
+				{allFeatures}
 			</ScrollView>
 		</SafeAreaView>
 	);

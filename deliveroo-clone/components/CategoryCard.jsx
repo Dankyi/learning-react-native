@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
+import { urlFor } from "../sanity";
 
 const CategoryCard = ({ imgURL, title }) => {
 	return (
@@ -6,13 +7,13 @@ const CategoryCard = ({ imgURL, title }) => {
 			<View>
 				<Image
 					className="h-20 w-20 rounded"
-					source={{ uri: imgURL }}
+					source={{ uri: urlFor(imgURL).url() }}
 				/>
 			</View>
 
 			<View>
 				<Text className="absolute bottom-1 left-1 
-				text-white font-bold">
+				text-turquoise font-bold">
 					{title}
 				</Text>
 			</View>

@@ -1,11 +1,44 @@
+import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 
-import Card from "./Card";
+import sanityClient from "../sanity";
+import FeaturedRowCard from "./FeaturedRowCard";
 
 const turquoise = "#00ccbb";
 
+const query = `* [_type == "featured" && _id == $id] {
+	...,
+	restaurants[]-> {
+		...,
+		dishes[]->
+	}
+}[0]`;
+
 const FeaturedRow = ({ id, title, description }) => {
+	const [restaurants, setRestaurants] = React.useState([]);
+
+	React.useEffect(() => {
+		sanityClient.fetch(query, { id })
+			.then(data => setRestaurants(data?.restaurants));
+	}, [id]);
+
+	const allRestaurants = restaurants.map(restaurant => (
+		<FeaturedRowCard
+			key={restaurant._id}
+			id={restaurant._id}
+			address={restaurant.address}
+			dishes={restaurant.dishes}
+			imgURL={restaurant.image}
+			lat={restaurant.lng}
+			lng={restaurant.lat}
+			title={restaurant.name}
+			rating={restaurant.rating}
+			description={restaurant.short_description}
+			genre={restaurant.name}
+		/>
+	));
+
 	return (
 		<View className="mx-4 mb-4">
 			<View>
@@ -20,33 +53,7 @@ const FeaturedRow = ({ id, title, description }) => {
 			</View>
 
 			<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-				{/* Card Element */}
-				<Card
-					id="1"
-					imgURL="https://links.papareact.com/gn7"
-					title="Nando's"
-					rating={4.8}
-					description="Offers"
-					genre="Chinese"
-					dishes={[]}
-					address="George Street"
-					lng={415}
-					lat={1245}
-				/>
-
-				<Card
-					id="2"
-					imgURL="https://links.papareact.com/gn7"
-					title="Nando's"
-					rating={4.8}
-					description="Offers"
-					genre="English"
-					dishes={[]}
-					address="Clink Street"
-					lng={415}
-					lat={1245}
-				/>
-
+				{allRestaurants}
 			</ScrollView>
 		</View>
 	);

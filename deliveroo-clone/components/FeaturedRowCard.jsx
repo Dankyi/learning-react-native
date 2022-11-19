@@ -2,6 +2,8 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { MapPinIcon } from "react-native-heroicons/outline";
 import { StarIcon } from "react-native-heroicons/solid";
 
+import { urlFor } from "../sanity";
+
 const turquoise = "#00ccbb";
 
 const Card = ({
@@ -12,7 +14,7 @@ const Card = ({
 		<TouchableOpacity className="max-w-sm rounded mr-2 bg-white overflow-hidden shadow-lg">
 			<Image
 				className="w-64 h-36"
-				source={{ uri: imgURL }}
+				source={{ uri: urlFor(imgURL).url() }}
 			/>
 
 			<View className="px-3 py-2 space-y-1">
