@@ -31,7 +31,7 @@ const HomeScreen = () => {
 		navigation.setOptions({
 			headerShown: false,
 		});
-	}, [])
+	}, []);
 
 	React.useEffect(() => {
 		sanityClient.fetch(query)
@@ -54,12 +54,12 @@ const HomeScreen = () => {
 				<View>
 					<Image
 						source={{ uri: "https://links.papareact.com/wru" }}
-						className="h-7 w-7 bg-gray-300 p-4 rounded-full"
+						className="h-7 w-7 bg-lightGray p-4 rounded-full"
 					/>
 				</View>
 
 				<View className="flex-1">
-					<Text className="font-bold text-gray-400 text-xs">
+					<Text className="font-bold text-lightGray text-xs">
 						Deliver Now
 					</Text>
 
@@ -76,7 +76,7 @@ const HomeScreen = () => {
 
 			{/* Search */}
 			<View className="flex-row items-center mx-4 space-x-2 pb-2">
-				<View className="flex-row flex-1 p-3 space-x-2 bg-gray-100">
+				<View className="flex-row flex-1 p-3 space-x-2 bg-lighterGray">
 					<MagnifyingGlassIcon size={20} color="gray" />
 					<TextInput
 						placeholder="Restaurants and Cuisines"
@@ -90,7 +90,7 @@ const HomeScreen = () => {
 			</View>
 
 			{/* Body */}
-			<ScrollView className="bg-gray-100">
+			<ScrollView className="bg-lighterGray">
 				<Categories />
 
 				{allFeatures}

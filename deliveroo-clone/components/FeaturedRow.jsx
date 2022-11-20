@@ -47,7 +47,7 @@ const FeaturedRow = ({ id, title, description }) => {
 					<ArrowRightIcon color={turquoise} />
 				</View>
 
-				<Text className="text-gray-600 text-xs mb-1.5">
+				<Text className="text-darkGray text-xs mb-1.5">
 					{description}
 				</Text>
 			</View>

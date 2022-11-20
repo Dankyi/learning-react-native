@@ -7,7 +7,11 @@ module.exports = {
 	],
 	theme: {
 		colors: {
-			turquoise: "#00ccbb"
+			turquoise: "#00ccbb",
+			white: "#fff",
+			darkGray: "#4C4C4C",
+			lightGray: "#ddd",
+			lighterGray: "#F0F0F0"
 		},
 		extend: {},
 	},
