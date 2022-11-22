@@ -3,8 +3,7 @@ import React from "react";
 import Currency from "react-currency-formatter";
 import { useSelector, useDispatch } from "react-redux";
 import {
-	addToBasket, removeFromBasket,
-	selectBasketItems, selectBasketById
+	addToBasket, removeFromBasket, selectBasketById
 } from "../features/basketSlice";
 
 import { View, Text, Image, TouchableOpacity } from "react-native";

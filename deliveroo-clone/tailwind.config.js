@@ -8,6 +8,7 @@ module.exports = {
 	theme: {
 		colors: {
 			turquoise: "#00ccbb",
+			darkTurquoise: "#01A290",
 			white: "#fff",
 			darkGray: "#4C4C4C",
 			lightGray: "#ddd",
