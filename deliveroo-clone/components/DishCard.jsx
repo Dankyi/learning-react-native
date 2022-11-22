@@ -1,6 +1,11 @@
 
 import React from "react";
 import Currency from "react-currency-formatter";
+import { useSelector, useDispatch } from "react-redux";
+import {
+	addToBasket, removeFromBasket,
+	selectBasketItems, selectBasketById
+} from "../features/basketSlice";
 
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { MinusCircleIcon, PlusCircleIcon } from "react-native-heroicons/solid";
@@ -9,17 +14,20 @@ const turquoise = "#00ccbb";
 
 const DishCard = ({ id, name, description, imgURL, price }) => {
 	const [isPressed, setIsPressed] = React.useState(false);
-	const [quantity, setQuantity] = React.useState(0);
 
-	const handleMinus = () => {
-		if (quantity !== 0) {
-			setQuantity(prevQty => prevQty - 1);
-		}
+	const basketItemsById = useSelector((state) => selectBasketById(state, id));
+	const dispatch = useDispatch();
+
+	const addItemToBasket = (item) => {
+		dispatch(addToBasket(item));
 	};
 
-	const handlePlus = () => {
-		setQuantity(prevQty => prevQty + 1);
-	}
+	const removeItemFromBasket = (itemId) => {
+		if (!basketItemsById.length) {
+			return;
+		}
+		dispatch(removeFromBasket(itemId));
+	};
 
 	return (
 		<TouchableOpacity
@@ -51,13 +59,20 @@ const DishCard = ({ id, name, description, imgURL, price }) => {
 
 				{isPressed &&
 					<View className="flex-row space-x-2 items-center">
-						<TouchableOpacity onPress={handleMinus}>
-							<MinusCircleIcon color={turquoise} size={40} opacity={0.7} />
+						<TouchableOpacity onPress={() => removeItemFromBasket(id)} >
+							<MinusCircleIcon
+								color={basketItemsById.length ? turquoise : "gray"}
+								size={40} opacity={0.7}
+							/>
 						</TouchableOpacity>
 
-						<Text>{quantity}</Text>
+						<Text>{basketItemsById.length}</Text>
 
-						<TouchableOpacity onPress={handlePlus}>
+						<TouchableOpacity
+							onPress={() => addItemToBasket({
+								id, name, description, imgURL, price
+							})}
+						>
 							<PlusCircleIcon color={turquoise} size={40} opacity={0.7} />
 						</TouchableOpacity>
 					</View>
