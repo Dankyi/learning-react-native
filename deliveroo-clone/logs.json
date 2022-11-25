@@ -1,0 +1,71 @@
+{
+	"09ac770a-6992-48fa-b005-69aa306e9277": [
+		{
+			"description": "Delicious Kentucky Fried Chicken",
+			"id": "09ac770a-6992-48fa-b005-69aa306e9277",
+			"imgURL": "https://cdn.sanity.io/images/mkuohubo/production/b807425a34afafa1ef342321fc8346c4dd779b49-1600x900.jpg",
+			"name": "KFC Kentucky Fried Chicken",
+			"price": 8
+		},
+		{
+			"description": "Delicious Kentucky Fried Chicken",
+			"id": "09ac770a-6992-48fa-b005-69aa306e9277",
+			"imgURL": "https://cdn.sanity.io/images/mkuohubo/production/b807425a34afafa1ef342321fc8346c4dd779b49-1600x900.jpg",
+			"name": "KFC Kentucky Fried Chicken",
+			"price": 8
+		}
+	],
+	"43e83eef-2946-4dc7-b742-dc1b274bf164": [
+		{
+			"description": "Delicious KFC Rice Box Meal",
+			"id": "43e83eef-2946-4dc7-b742-dc1b274bf164",
+			"imgURL": "https://cdn.sanity.io/images/mkuohubo/production/4c825a6dbbf4dd9ec8da15ea16ac6f17bd3f7b70-1136x852.webp",
+			"name": "KFC Rice Box Meal",
+			"price": 10
+		},
+		{
+			"description": "Delicious KFC Rice Box Meal",
+			"id": "43e83eef-2946-4dc7-b742-dc1b274bf164",
+			"imgURL": "https://cdn.sanity.io/images/mkuohubo/production/4c825a6dbbf4dd9ec8da15ea16ac6f17bd3f7b70-1136x852.webp",
+			"name": "KFC Rice Box Meal",
+			"price": 10
+		},
+		{
+			"description": "Delicious KFC Rice Box Meal",
+			"id": "43e83eef-2946-4dc7-b742-dc1b274bf164",
+			"imgURL": "https://cdn.sanity.io/images/mkuohubo/production/4c825a6dbbf4dd9ec8da15ea16ac6f17bd3f7b70-1136x852.webp",
+			"name": "KFC Rice Box Meal",
+			"price": 10
+		}
+	],
+	"e079b00a-7eae-4bfb-8bce-5839b3aafc78": [
+		{
+			"description": "Sweet Ball Drop Frappuccino",
+			"id": "e079b00a-7eae-4bfb-8bce-5839b3aafc78",
+			"imgURL": "https://cdn.sanity.io/images/mkuohubo/production/57a3cf8663411c7d6c2e2d972a63516f3cbe7364-794x892.png",
+			"name": "Ball Drop Frappuccino",
+			"price": 6
+		},
+		{
+			"description": "Sweet Ball Drop Frappuccino",
+			"id": "e079b00a-7eae-4bfb-8bce-5839b3aafc78",
+			"imgURL": "https://cdn.sanity.io/images/mkuohubo/production/57a3cf8663411c7d6c2e2d972a63516f3cbe7364-794x892.png",
+			"name": "Ball Drop Frappuccino",
+			"price": 6
+		},
+		{
+			"description": "Sweet Ball Drop Frappuccino",
+			"id": "e079b00a-7eae-4bfb-8bce-5839b3aafc78",
+			"imgURL": "https://cdn.sanity.io/images/mkuohubo/production/57a3cf8663411c7d6c2e2d972a63516f3cbe7364-794x892.png",
+			"name": "Ball Drop Frappuccino",
+			"price": 6
+		},
+		{
+			"description": "Sweet Ball Drop Frappuccino",
+			"id": "e079b00a-7eae-4bfb-8bce-5839b3aafc78",
+			"imgURL": "https://cdn.sanity.io/images/mkuohubo/production/57a3cf8663411c7d6c2e2d972a63516f3cbe7364-794x892.png",
+			"name": "Ball Drop Frappuccino",
+			"price": 6
+		}
+	]
+}

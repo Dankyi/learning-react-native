@@ -43,7 +43,7 @@ const RestaurantScreen = () => {
 
 						<TouchableOpacity
 							className="absolute p-2 rounded-full 
-						left-6 top-14 bg-lighterGray"
+								left-6 top-14 bg-lighterGray"
 							onPress={() => navigation.goBack()}
 						>
 							<ArrowLeftIcon color={turquoise} size={26} opacity={0.7} />
@@ -67,7 +67,9 @@ const RestaurantScreen = () => {
 
 							<View className="flex-row items-center space-x-1.5 mb-2">
 								<MapPinIcon color="gray" />
-								<Text className="text-xs text-darkGray">Nearby {address}</Text>
+								<Text className="text-xs text-darkGray">
+									Nearby {address}
+								</Text>
 							</View>
 
 							<Text className="text-xs text-darkGray mb-3">
@@ -75,7 +77,7 @@ const RestaurantScreen = () => {
 							</Text>
 
 							<TouchableOpacity className="flex-row justify-between items-center 
-						border border-t-lighterGray border-x-0 border-b-0 pt-3 mb-3"
+								border border-t-lighterGray border-x-0 border-b-0 pt-3 mb-3"
 							>
 								<View className="flex-row space-x-3 items-center">
 									<QuestionMarkCircleIcon color="gray" />
