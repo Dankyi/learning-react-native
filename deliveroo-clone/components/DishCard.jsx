@@ -14,7 +14,7 @@ const turquoise = "#00ccbb";
 const DishCard = ({ id, name, description, imgURL, price }) => {
 	const [isPressed, setIsPressed] = React.useState(false);
 
-	const basketItemsById = useSelector((state) => selectBasketById(state, id));
+	const basketItemById = useSelector((state) => selectBasketById(state, id));
 	const dispatch = useDispatch();
 
 	const addItemToBasket = (item) => {
@@ -22,7 +22,7 @@ const DishCard = ({ id, name, description, imgURL, price }) => {
 	};
 
 	const removeItemFromBasket = (itemId) => {
-		if (!basketItemsById.length) {
+		if (!basketItemById.length) {
 			return;
 		}
 		dispatch(removeFromBasket(itemId));
@@ -56,16 +56,16 @@ const DishCard = ({ id, name, description, imgURL, price }) => {
 					/>
 				</View>
 
-				{isPressed &&
+				{(isPressed || basketItemById.length > 0) &&
 					<View className="flex-row space-x-2 items-center">
-						<TouchableOpacity onPress={() => removeItemFromBasket(id)} >
+						<TouchableOpacity onPress={() => removeItemFromBasket(id)}>
 							<MinusCircleIcon
-								color={basketItemsById.length ? turquoise : "gray"}
+								color={basketItemById.length ? turquoise : "gray"}
 								size={40} opacity={0.7}
 							/>
 						</TouchableOpacity>
 
-						<Text>{basketItemsById.length}</Text>
+						<Text>{basketItemById.length}</Text>
 
 						<TouchableOpacity
 							onPress={() => addItemToBasket({

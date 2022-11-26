@@ -7,7 +7,7 @@ import { urlFor } from "../sanity";
 
 const turquoise = "#00ccbb";
 
-const Card = ({
+const FeaturedRowCard = ({
 	id, imgURL, title, rating, description,
 	genre, dishes, address, lng, lat
 }) => {
@@ -16,8 +16,8 @@ const Card = ({
 	return (
 		<TouchableOpacity
 			key={id}
-			className="max-w-sm rounded mr-2 bg-white overflow-hidden shadow-lg"
-			onPress={() => navigation.navigate("Restaurant", {
+			className="max-w-sm rounded mr-4 bg-white overflow-hidden shadow-lg"
+			onPress={() => navigation.navigate("RestaurantScreen", {
 				id, imgURL, title, rating, description,
 				genre, dishes, address, lng, lat
 			})}
@@ -46,4 +46,4 @@ const Card = ({
 	);
 };
 
-export default Card;
+export default FeaturedRowCard;

@@ -1,10 +1,14 @@
 
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { ArrowLeftIcon, ChevronRightIcon, MapPinIcon, QuestionMarkCircleIcon } from "react-native-heroicons/outline";
+import {
+	ArrowLeftIcon, ChevronRightIcon,
+	MapPinIcon, QuestionMarkCircleIcon
+} from "react-native-heroicons/outline";
 import { StarIcon } from "react-native-heroicons/solid";
 import {
-	View, Text, ScrollView, Image, TouchableOpacity
+	View, Text, ScrollView,
+	Image, TouchableOpacity
 } from "react-native";
 
 import { urlFor } from "../sanity";
@@ -22,12 +26,6 @@ const RestaurantScreen = () => {
 			genre, dishes, address, lng, lat
 		}
 	} = useRoute();
-
-	React.useLayoutEffect(() => {
-		navigation.setOptions({
-			headerShown: false,
-		});
-	}, []);
 
 	return (
 		<>

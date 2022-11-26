@@ -8,6 +8,7 @@ import { selectBasketItems, selectBasketTotal } from "../features/basketSlice";
 
 const BasketIcon = () => {
 	const allBasketItems = useSelector(selectBasketItems);
+	const uniqueItemIDs = [...new Set(allBasketItems.map(item => item.id))];
 	const basketTotal = useSelector(selectBasketTotal);
 	const navigation = useNavigation();
 
@@ -17,12 +18,12 @@ const BasketIcon = () => {
 		<View className="absolute bottom-10 w-full z-50">
 			<TouchableOpacity
 				className="flex-row items-center p-4 
-				bg-turquoise mx-5 rounded-lg space-x-1"
-				onPress={() => navigation.navigate("ShoppingBasket")}
+					bg-turquoise mx-5 rounded-lg space-x-1"
+				onPress={() => navigation.navigate("ShoppingBasketScreen")}
 			>
 				<Text className="px-2 py-1 text-base font-semibold 
 					text-white bg-darkTurquoise">
-					{allBasketItems.length}
+					{uniqueItemIDs.length}
 				</Text>
 
 				<Text className="flex-1 text-center text-white 

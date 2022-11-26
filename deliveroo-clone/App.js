@@ -18,17 +18,18 @@ const App = () => {
 			<Provider store={store}>
 				<Stack.Navigator>
 					<Stack.Screen
-						name="Home"
+						name="HomeScreen"
 						component={HomeScreen}
 					/>
 
 					<Stack.Screen
-						name="Restaurant"
+						name="RestaurantScreen"
 						component={RestaurantScreen}
+						options={{ headerShown: false }}
 					/>
 
 					<Stack.Screen
-						name="ShoppingBasket"
+						name="ShoppingBasketScreen"
 						component={ShoppingBasketScreen}
 						options={{
 							presentation: "modal",

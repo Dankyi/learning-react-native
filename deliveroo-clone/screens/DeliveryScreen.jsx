@@ -15,7 +15,7 @@ const DeliveryScreen = () => {
 		<View className="flex-1 bg-turquoise justify-between">
 			<SafeAreaView className="z-50">
 				<View className="flex-row p-5 justify-between items-center">
-					<TouchableOpacity onPress={() => navigation.navigate("Home")}>
+					<TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
 						<XMarkIcon size={30} color="white" />
 					</TouchableOpacity>
 
