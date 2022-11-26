@@ -117,7 +117,10 @@ const ShoppingBasket = () => {
 					</Text>
 				</View>
 
-				<TouchableOpacity className="bg-turquoise rounded-lg mx-5">
+				<TouchableOpacity
+					className="bg-turquoise rounded-lg mx-5"
+					onPress={() => navigation.navigate("OrderPrepScreen")}
+				>
 					<Text className="text-base font-extrabold 
 						text-center text-white p-2">
 						Place Order
