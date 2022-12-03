@@ -1,8 +1,16 @@
 import { View, SafeAreaView, Image } from "react-native";
+import { useDispatch } from "react-redux";
+import {
+	GooglePlacesAutocomplete
+} from "react-native-google-places-autocomplete";
+import { GOOGLE_MAPS_API_KEY } from "@env";
 
 import NavOptions from "../components/NavOptions";
+import { setDestination, setOrigin } from "../slices/navSlice";
 
 const HomeScreen = () => {
+	const dispatch = useDispatch();
+
 	return (
 		<SafeAreaView className="flex-1 bg-white">
 			<View className="p-4">
@@ -10,6 +18,31 @@ const HomeScreen = () => {
 					className="w-24 h-8 object-contain"
 					source={{ uri: "https://links.papareact.com/gzs" }}
 				/>
+
+				<View className="mt-4 mb-8">
+					<GooglePlacesAutocomplete
+						placeholder="Where from?"
+						minLength={2}
+						nearbyPlacesAPI="GooglePlacesSearch"
+						debounce={400}
+						textInputProps={{ fontSize: 18 }}
+						enablePoweredByContainer={false}
+						returnKeyType={"search"}
+						fetchDetails={true}
+						query={{
+							key: GOOGLE_MAPS_API_KEY,
+							language: "en"
+						}}
+						onPress={(data, details = null) => {
+							dispatch(setOrigin({
+								location: details.geometry.location,
+								description: data.description
+							}));
+
+							dispatch(setDestination(null));
+						}}
+					/>
+				</View>
 
 				<NavOptions />
 			</View>
