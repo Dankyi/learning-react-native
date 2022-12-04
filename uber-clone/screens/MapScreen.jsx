@@ -1,10 +1,18 @@
 import { View, Text, SafeAreaView } from "react-native";
 
+import Map from "../components/Map";
+
 const MapScreen = () => {
 	return (
-		<SafeAreaView>
-			<Text>MapScreen</Text>
-		</SafeAreaView>
+		<View>
+			<View className="h-1/2">
+				<Map />
+			</View>
+
+			<View className="h-1/2">
+
+			</View>
+		</View>
 	);
 };
 

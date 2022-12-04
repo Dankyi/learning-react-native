@@ -33,6 +33,7 @@ const HomeScreen = () => {
 							key: GOOGLE_MAPS_API_KEY,
 							language: "en"
 						}}
+						// store the origin location data in redux store
 						onPress={(data, details = null) => {
 							dispatch(setOrigin({
 								location: details.geometry.location,

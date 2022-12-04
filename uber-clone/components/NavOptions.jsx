@@ -4,6 +4,8 @@ import {
 	View, Text, FlatList,
 	TouchableOpacity, Image
 } from "react-native";
+import { useSelector } from "react-redux";
+import { selectOrigin } from "../slices/navSlice";
 
 const navData = [
 	{
@@ -22,6 +24,7 @@ const navData = [
 
 const NavOptions = () => {
 	const navigation = useNavigation();
+	const origin = useSelector(selectOrigin);
 
 	return (
 		<FlatList
@@ -32,9 +35,10 @@ const NavOptions = () => {
 			renderItem={({ item }) => (
 				<TouchableOpacity
 					className="bg-gray-200 w-40 mt-5 mr-3 py-2.5"
+					disabled={!origin}
 					onPress={() => navigation.navigate(item.screen)}
 				>
-					<View>
+					<View className={!origin && "opacity-30"}>
 						<Image
 							className="h-36"
 							source={{ uri: item.image }}
