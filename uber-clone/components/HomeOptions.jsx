@@ -7,7 +7,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectOrigin } from "../slices/navSlice";
 
-const navData = [
+const data = [
 	{
 		id: "1",
 		title: "Get a ride",
@@ -22,13 +22,13 @@ const navData = [
 	}
 ];
 
-const NavOptions = () => {
+const HomeOptions = () => {
 	const navigation = useNavigation();
 	const origin = useSelector(selectOrigin);
 
 	return (
 		<FlatList
-			data={navData}
+			data={data}
 			keyExtractor={(item) => item.id}
 			horizontal
 			showsHorizontalScrollIndicator={false}
@@ -65,4 +65,4 @@ const NavOptions = () => {
 	);
 };
 
-export default NavOptions;
+export default HomeOptions;
