@@ -2,11 +2,12 @@ import { Provider } from "react-redux";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { KeyboardAvoidingView, Platform } from "react-native";
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
+import FoodScreen from "./screens/FoodScreen";
 import store from "./store";
-import { KeyboardAvoidingView, Platform } from "react-native";
 
 const App = () => {
 	const Stack = createNativeStackNavigator();
@@ -27,6 +28,14 @@ const App = () => {
 						<Stack.Screen
 							name="MapScreen"
 							component={MapScreen}
+							options={{
+								headerShown: false
+							}}
+						/>
+
+						<Stack.Screen
+							name="FoodScreen"
+							component={FoodScreen}
 							options={{
 								headerShown: false
 							}}

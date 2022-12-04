@@ -1,12 +1,15 @@
 import React from "react";
 import MapView, { Marker } from "react-native-maps";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MapViewDirections from "react-native-maps-directions";
 
-import { selectDestination, selectOrigin } from "../slices/navSlice";
 import { GOOGLE_MAPS_API_KEY } from "@env";
+import {
+	selectDestination, selectOrigin, setTravelTimeInfo
+} from "../slices/navSlice";
 
 const Map = () => {
+	const dispatch = useDispatch();
 	const origin = useSelector(selectOrigin);
 	const destination = useSelector(selectDestination);
 	// Reference (pointer) to a particular component
@@ -18,14 +21,25 @@ const Map = () => {
 		// Zoom and fit to markers. Use "fitToCoordinates"
 		// if fitToSuppliedMarkers no longer works
 		mapRef.current.fitToSuppliedMarkers(["origin", "destination"], {
-			edgePadding: {
-				right: 50,
-				bottom: 50,
-				left: 50,
-				top: 50
-			}
+			edgePadding: { top: 50, right: 50, bottom: 50, left: 50 }
 		});
 	}, [origin, destination]);
+
+	React.useEffect(() => {
+		if (!origin || !destination) return;
+
+		const getTravelTime = async () => {
+			fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?
+				units=imperial&origins=${origin.description}&destinations=
+				${destination.description}&key=${GOOGLE_MAPS_API_KEY}`)
+				.then(res => res.json())
+				.then(data => {
+					dispatch(setTravelTimeInfo(data.rows[0].elements[0]));
+				});
+		};
+
+		getTravelTime();
+	}, [origin, destination, GOOGLE_MAPS_API_KEY]);
 
 	return (
 		<MapView
