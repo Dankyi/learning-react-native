@@ -1,7 +1,12 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import {
+	GooglePlacesAutocomplete
+} from "react-native-google-places-autocomplete";
+import {
+	View, Text, SafeAreaView, TouchableOpacity,
+	TouchableWithoutFeedback, Keyboard
+} from "react-native";
 
 import { GOOGLE_MAPS_API_KEY } from "@env";
 import { setDestination } from "../slices/navSlice";
@@ -14,9 +19,11 @@ const MapScreenBottom = () => {
 
 	return (
 		<SafeAreaView className="flex-1 bg-white">
-			<Text className="py-2 text-base text-center">
-				Hi there!
-			</Text>
+			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+				<Text className="py-2 text-base text-center">
+					Hi there!
+				</Text>
+			</TouchableWithoutFeedback>
 			<View className="flex-shrink border-gray-200 border-t px-5">
 				<View>
 					<GooglePlacesAutocomplete

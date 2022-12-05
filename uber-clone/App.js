@@ -16,31 +16,37 @@ const App = () => {
 		<Provider store={store}>
 			<NavigationContainer>
 				<SafeAreaProvider>
-					<Stack.Navigator>
-						<Stack.Screen
-							name="HomeScreen"
-							component={HomeScreen}
-							options={{
-								headerShown: false
-							}}
-						/>
+					<KeyboardAvoidingView
+						className="flex-1"
+						behavior={Platform.OS === "ios" ? "padding" : "height"}
+						keyboardVerticalOffset={Platform.OS === "ios" ? -64 : 0}
+					>
+						<Stack.Navigator>
+							<Stack.Screen
+								name="HomeScreen"
+								component={HomeScreen}
+								options={{
+									headerShown: false
+								}}
+							/>
 
-						<Stack.Screen
-							name="MapScreen"
-							component={MapScreen}
-							options={{
-								headerShown: false
-							}}
-						/>
+							<Stack.Screen
+								name="MapScreen"
+								component={MapScreen}
+								options={{
+									headerShown: false
+								}}
+							/>
 
-						<Stack.Screen
-							name="FoodScreen"
-							component={FoodScreen}
-							options={{
-								headerShown: false
-							}}
-						/>
-					</Stack.Navigator>
+							<Stack.Screen
+								name="FoodScreen"
+								component={FoodScreen}
+								options={{
+									headerShown: false
+								}}
+							/>
+						</Stack.Navigator>
+					</KeyboardAvoidingView>
 				</SafeAreaProvider>
 			</NavigationContainer>
 		</Provider>

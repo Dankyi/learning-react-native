@@ -1,5 +1,8 @@
-import { View, SafeAreaView, Image } from "react-native";
 import { useDispatch } from "react-redux";
+import {
+	View, SafeAreaView, Image,
+	TouchableWithoutFeedback, Keyboard
+} from "react-native";
 import {
 	GooglePlacesAutocomplete
 } from "react-native-google-places-autocomplete";
@@ -15,13 +18,35 @@ const HomeScreen = () => {
 	return (
 		<SafeAreaView className="flex-1 bg-white">
 			<View className="p-4">
-				<Image
-					className="w-24 h-8 object-contain"
-					source={{ uri: "https://links.papareact.com/gzs" }}
-				/>
+				<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+					<View>
+						<Image
+							className="w-24 h-8"
+							style={{ resizeMode: "contain" }}
+							source={{ uri: "https://links.papareact.com/gzs" }}
+						/>
+					</View>
+				</TouchableWithoutFeedback>
 
-				<View className="mt-4 mb-8">
+				<View>
 					<GooglePlacesAutocomplete
+						styles={{
+							container: {
+								backgroundColor: "white",
+								paddingTop: 16,
+								flex: 0
+							},
+							textInputContainer: {
+								backgroundColor: "white"
+							},
+							textInput: {
+								backgroundColor: "#ddd",
+								fontSize: 18
+							},
+							predefinedPlacesDescription: {
+								color: "#1faadb"
+							}
+						}}
 						placeholder="Where from?"
 						minLength={2}
 						nearbyPlacesAPI="GooglePlacesSearch"

@@ -7,6 +7,7 @@ import { GOOGLE_MAPS_API_KEY } from "@env";
 import {
 	selectDestination, selectOrigin, setTravelTimeInfo
 } from "../slices/navSlice";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 const Map = () => {
 	const dispatch = useDispatch();
@@ -42,51 +43,53 @@ const Map = () => {
 	}, [origin, destination, GOOGLE_MAPS_API_KEY]);
 
 	return (
-		<MapView
-			ref={mapRef}
-			className="flex-1"
-			mapType="mutedStandard"
-			initialRegion={{
-				latitude: origin?.location?.lat,
-				longitude: origin?.location?.lng,
-				latitudeDelta: 0.005,
-				longitudeDelta: 0.005
-			}}
-		>
-			{origin?.location && (
-				<Marker
-					title="Origin"
-					description={origin?.description}
-					identifier="origin"
-					coordinate={{
-						latitude: origin.location?.lat,
-						longitude: origin.location?.lng
-					}}
-				/>
-			)}
+		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+			<MapView
+				ref={mapRef}
+				className="flex-1"
+				mapType="mutedStandard"
+				initialRegion={{
+					latitude: origin?.location?.lat,
+					longitude: origin?.location?.lng,
+					latitudeDelta: 0.005,
+					longitudeDelta: 0.005
+				}}
+			>
+				{origin?.location && (
+					<Marker
+						title="Origin"
+						description={origin?.description}
+						identifier="origin"
+						coordinate={{
+							latitude: origin.location?.lat,
+							longitude: origin.location?.lng
+						}}
+					/>
+				)}
 
-			{destination?.location && (
-				<Marker
-					title="Origin"
-					description={destination?.description}
-					identifier="destination"
-					coordinate={{
-						latitude: destination.location?.lat,
-						longitude: destination.location?.lng
-					}}
-				/>
-			)}
+				{destination?.location && (
+					<Marker
+						title="Origin"
+						description={destination?.description}
+						identifier="destination"
+						coordinate={{
+							latitude: destination.location?.lat,
+							longitude: destination.location?.lng
+						}}
+					/>
+				)}
 
-			{origin && destination && (
-				<MapViewDirections
-					origin={origin.description}
-					destination={destination.description}
-					apikey={GOOGLE_MAPS_API_KEY}
-					strokeColor="black"
-					strokeWidth={8}
-				/>
-			)}
-		</MapView>
+				{origin && destination && (
+					<MapViewDirections
+						origin={origin.description}
+						destination={destination.description}
+						apikey={GOOGLE_MAPS_API_KEY}
+						strokeColor="black"
+						strokeWidth={8}
+					/>
+				)}
+			</MapView>
+		</TouchableWithoutFeedback>
 	);
 };
 
