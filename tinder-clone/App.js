@@ -1,12 +1,24 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Text, View } from "react-native";
 
+import HomeScreen from "./screens/HomeScreen";
+
 const App = () => {
+	const Stack = createNativeStackNavigator();
+
 	return (
-		<View className="flex-1 items-center justify-center">
-			<Text className="text-red-600">
-				Testing NativeWind Setup...
-			</Text>
-		</View>
+		<NavigationContainer>
+			<Stack.Navigator>
+				<Stack.Screen
+					name="HomeScreen"
+					component={HomeScreen}
+					options={{
+						headerShown: false
+					}}
+				/>
+			</Stack.Navigator>
+		</NavigationContainer>
 	);
 };
 
