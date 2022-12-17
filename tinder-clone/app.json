@@ -5,6 +5,7 @@
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
+		"scheme": "host.exp.exponent",
 		"userInterfaceStyle": "light",
 		"splash": {
 			"image": "./assets/splash.png",
@@ -18,9 +19,13 @@
 			"**/*"
 		],
 		"ios": {
+			"googleServicesFile": "./GoogleService-Info.plist",
+			"bundleIdentifier": "host.exp.exponent",
 			"supportsTablet": true
 		},
 		"android": {
+			"googleServicesFile": "./google-services.json",
+			"package": "host.exp.exponent",
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#FFFFFF"
@@ -28,6 +33,11 @@
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "0eae3119-621f-4ecf-85d9-8d9eb3afd0b2"
+			}
 		}
 	}
 }

@@ -1,10 +1,13 @@
-import { Text, SafeAreaView } from "react-native";
+import { View, Button } from "react-native";
+import useAuth from "../hooks/useAuth";
 
 const HomeScreen = () => {
+	const { logout } = useAuth();
+
 	return (
-		<SafeAreaView>
-			<Text>HomeScreen</Text>
-		</SafeAreaView>
+		<View>
+			<Button title="logout" onPress={logout} />
+		</View>
 	);
 };
 
