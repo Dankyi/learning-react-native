@@ -83,7 +83,6 @@ export const AuthProvider = ({ children }) => {
 		// Only run and update the values when these 3 change
 	}), [user, isLoading, error]);
 
-	console.log({ user });
 	return (
 		<AuthContext.Provider value={memoedValues}>
 			{!isHomeLoading && children}
