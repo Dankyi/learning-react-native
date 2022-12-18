@@ -1,16 +1,10 @@
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 
 import useAuth from "../hooks/useAuth";
 
 const LoginScreen = () => {
 	const { signInWithGoogle, isLoading } = useAuth();
-	const navigation = useNavigation();
-
-	React.useLayoutEffect(() => {
-		navigation.setOptions({ headerShown: false });
-	}, []);
 
 	return (
 		<View className="flex-1">
