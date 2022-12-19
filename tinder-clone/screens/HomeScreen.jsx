@@ -55,7 +55,8 @@ const HomeScreen = () => {
 				</View>
 
 				{/* Tinder icon */}
-				<TouchableOpacity>
+				<TouchableOpacity
+					onPress={() => navigation.navigate("ProfileUpdateScreen")}>
 					<Image
 						className="w-12 h-12"
 						source={require("../assets/tinder-logo.png")}
