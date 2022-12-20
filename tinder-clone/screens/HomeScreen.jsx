@@ -14,13 +14,13 @@ import useAuth from "../hooks/useAuth";
 import { dummyData } from "../dummy-data";
 
 const HomeScreen = () => {
-	const [profilePressed, setProfilePressed] = React.useState(false);
+	const [profPicPressed, setProfPicPressed] = React.useState(false);
 	const [numCardSwiped, setNumCardSwiped] = React.useState(0);
 	const { user, logout } = useAuth();
 	const navigation = useNavigation();
 	const swipeRef = React.useRef(null);
 
-	const hideDropdown = () => setProfilePressed(false);
+	const hideDropdown = () => setProfPicPressed(false);
 
 	return (
 		<TouchableWithoutFeedback onPress={hideDropdown}>
@@ -31,7 +31,7 @@ const HomeScreen = () => {
 					<View className="relative">
 						{/* Profile picture */}
 						<TouchableOpacity
-							onPress={() => setProfilePressed(!profilePressed)}
+							onPress={() => setProfPicPressed(!profPicPressed)}
 						>
 							<Image
 								className="w-10 h-10 rounded-full"
@@ -41,14 +41,14 @@ const HomeScreen = () => {
 
 						{/* Dropdown */}
 						<View
-							className={`absolute top-11 w-32 h-20 px-2.5 py-2.5
+							className={`absolute top-11 w-40 h-20 px-2.5 py-2.5
 								space-y-4 bg-white shadow-lg rounded-md z-50
-								${!profilePressed && "hidden"}`}
+								${!profPicPressed && "hidden"}`}
 						>
 							<TouchableOpacity
 								className="flex-row space-x-2"
 								onPress={() => {
-									setProfilePressed(!profilePressed);
+									setProfPicPressed(!profPicPressed);
 									logout();
 								}}
 							>
@@ -64,7 +64,7 @@ const HomeScreen = () => {
 							<TouchableOpacity
 								className="flex-row space-x-1.5"
 								onPress={() => {
-									setProfilePressed(!profilePressed);
+									setProfPicPressed(!profPicPressed);
 									navigation.navigate("ProfileUpdateScreen");
 								}}
 							>
@@ -74,7 +74,7 @@ const HomeScreen = () => {
 									size={18}
 								/>
 
-								<Text>Edit Profile</Text>
+								<Text>Update Profile</Text>
 							</TouchableOpacity>
 						</View>
 					</View>
@@ -120,7 +120,7 @@ const HomeScreen = () => {
 						}
 					>
 						<Text className="py-3 px-16 text-sm text-center font-semibold">
-							OOPS! No more pictures to swipe
+							OOPS! There are no more pictures
 						</Text>
 
 						<Image

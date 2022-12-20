@@ -25,7 +25,7 @@ const ProfileUpdateScreen = () => {
 		const userData = {
 			id: user.uid,
 			displayName: user.displayName,
-			photoUrl: profilePic,
+			photoURL: profilePic,
 			job: job,
 			age: age,
 			timestamp: serverTimestamp()
@@ -47,14 +47,18 @@ const ProfileUpdateScreen = () => {
 					source={{ uri: "https://links.papareact.com/2pf" }}
 				/>
 
-				<Text className="pb-2 text-sm font-semibold self-center">
+				<Text className="text-sm font-semibold self-center">
 					Welcome {user.displayName}!
+				</Text>
+
+				<Text className="pb-2 text-sm font-semibold self-center">
+					Update your profile to find a match!
 				</Text>
 
 				{/* Profile Update Card Section */}
 				<ScrollView>
-					<View className="mb-64 px-6 py-4 mx-6 bg-[#fad9db] shadow-md rounded-md">
-						<Text className="mb-4 self-center text-sm font-bold">
+					<View className="mb-64 px-6 py-3 mx-6 bg-[#fad9db] shadow-md rounded-md">
+						<Text className="mb-4 self-center text-xs font-bold">
 							PROFILE UPDATE FORM
 						</Text>
 
