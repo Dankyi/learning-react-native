@@ -1,8 +1,11 @@
+import { useNavigation } from "@react-navigation/native";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import React from "react";
 import {
 	View, Image, TextInput, Keyboard, ScrollView,
 	TouchableOpacity, TouchableWithoutFeedback, Text
 } from "react-native";
+import { db } from "../firebase";
 
 import useAuth from "../hooks/useAuth";
 
@@ -11,11 +14,29 @@ import useAuth from "../hooks/useAuth";
 
 const ProfileUpdateScreen = () => {
 	const { user } = useAuth();
+	const navigation = useNavigation();
 	const [profilePic, setProfilePic] = React.useState(null);
 	const [job, setJob] = React.useState(null);
 	const [age, setAge] = React.useState(null);
 
 	const isFormIncomplete = !profilePic || !job || !age;
+
+	const updateUserProfile = () => {
+		const userData = {
+			id: user.uid,
+			displayName: user.displayName,
+			photoUrl: profilePic,
+			job: job,
+			age: age,
+			timestamp: serverTimestamp()
+		};
+
+		// This creates a "users" collection if it doesn't already
+		// exist or updates an existing one
+		setDoc(doc(db, "users", user.uid), userData)
+			.then(() => navigation.navigate("HomeScreen"))
+			.catch(error => alert(error.message));
+	};
 
 	return (
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -47,7 +68,7 @@ const ProfileUpdateScreen = () => {
 								{/*// Todo: Allow users to upload their pics from their device*/}
 								<TextInput
 									className="pb-2 px-2 text-sm border bg-white
-									border-gray-100 rounded-md"
+										border-gray-100 rounded-md"
 									placeholder="Enter your profile picture url"
 									value={profilePic}
 									onChangeText={(text) => setProfilePic(text)}
@@ -62,7 +83,7 @@ const ProfileUpdateScreen = () => {
 
 								<TextInput
 									className="pb-2 px-2 text-sm border bg-white
-									border-gray-100 rounded-md"
+										border-gray-100 rounded-md"
 									placeholder="Enter your occupation"
 									value={job}
 									onChangeText={(text) => setJob(text)}
@@ -77,7 +98,7 @@ const ProfileUpdateScreen = () => {
 
 								<TextInput
 									className="pb-2 px-2 text-sm border bg-white
-									border-gray-100 rounded-md"
+										border-gray-100 rounded-md"
 									placeholder="Enter age"
 									value={age}
 									maxLength={2}
@@ -90,8 +111,9 @@ const ProfileUpdateScreen = () => {
 						{/* Update Profile Button */}
 						<TouchableOpacity
 							className={`mt-6 w-48 self-center p-3 rounded-xl
-							${isFormIncomplete ? "bg-[#e5949a]" : "bg-[#FF5864]"}`}
+								${isFormIncomplete ? "bg-[#e5949a]" : "bg-[#FF5864]"}`}
 							disabled={isFormIncomplete}
+							onPress={updateUserProfile}
 						>
 							<Text className="text-lg font-semibold text-center text-white">
 								Update Profile
