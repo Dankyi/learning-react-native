@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import Swiper from "react-native-deck-swiper";
+import { collection, doc, onSnapshot } from "firebase/firestore";
 import {
 	AntDesign, Ionicons, FontAwesome5,
 	Feather, MaterialCommunityIcons
@@ -11,16 +12,50 @@ import {
 } from "react-native";
 
 import useAuth from "../hooks/useAuth";
-import { dummyData } from "../dummy-data";
+import { db } from "../firebase";
 
 const HomeScreen = () => {
 	const [profPicPressed, setProfPicPressed] = React.useState(false);
 	const [numCardSwiped, setNumCardSwiped] = React.useState(0);
+	const [profiles, setProfiles] = React.useState([]);
 	const { user, logout } = useAuth();
 	const navigation = useNavigation();
 	const swipeRef = React.useRef(null);
 
 	const hideDropdown = () => setProfPicPressed(false);
+
+	// This causes ProfileUpdateScreen to open when a user
+	// not registered in "users" DB collection signs
+	React.useLayoutEffect(() =>
+		onSnapshot(doc(db, "users", user.uid), (docSnap) => {
+			if (!docSnap.exists()) {
+				navigation.navigate("ProfileUpdateScreen");
+			}
+		}), []);
+
+	// This fetches profiles (other than that of current user) from DB
+	React.useEffect(() => {
+		let unsubscribe;
+
+		const fetchProfilesDB = async () => {
+			unsubscribe = onSnapshot(collection(db, "users"), (usersCollSnap) => {
+				// Filter out all profiles with the exception of the
+				// current user (so they won't swipe themselves)
+				const filteredUsers = usersCollSnap.docs.filter(
+					userDoc => userDoc.id !== user.uid
+				);
+
+				// Map each of the filtered users and return
+				// the data (i.e. field) of each profile
+				setProfiles(
+					filteredUsers.map(doc => ({ ...doc.data() }))
+				);
+			});
+		};
+
+		fetchProfilesDB();
+		return unsubscribe;
+	}, []);
 
 	return (
 		<TouchableWithoutFeedback onPress={hideDropdown}>
@@ -112,7 +147,7 @@ const HomeScreen = () => {
 					{/* Static card beneath the Swiper to show user if 
 						there are no pictures to swipe */}
 					<View
-						className={`${(numCardSwiped + 1 <= dummyData.length)
+						className={`${(numCardSwiped + 1 <= profiles.length)
 							? "mx-7 mt-24 h-3/5"
 							: "mx-5 mt-16 h-5/6"}
 							relative bg-[#fad9db] items-center
@@ -132,9 +167,9 @@ const HomeScreen = () => {
 					<Swiper
 						ref={swipeRef}
 						containerStyle={{ backgroundColor: "tranparent" }}
-						cards={dummyData}
+						cards={profiles}
 						cardIndex={0}
-						stackSize={dummyData.length}
+						stackSize={profiles.length}
 						overlayLabels={{
 							left: {
 								title: "NOPE!",
@@ -184,7 +219,7 @@ const HomeScreen = () => {
 									>
 										<View>
 											<Text className="text-lg font-bold">
-												{card.firstName} {card.lastName}
+												{card.displayName}
 											</Text>
 											<Text>{card.job}</Text>
 										</View>
