@@ -1,7 +1,10 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import Swiper from "react-native-deck-swiper";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import {
+	collection, doc, getDocs, onSnapshot,
+	query, setDoc, where
+} from "firebase/firestore";
 import {
 	AntDesign, Ionicons, FontAwesome5,
 	Feather, MaterialCommunityIcons
@@ -13,6 +16,7 @@ import {
 
 import useAuth from "../hooks/useAuth";
 import { db } from "../firebase";
+import { async } from "@firebase/util";
 
 const HomeScreen = () => {
 	const [profPicPressed, setProfPicPressed] = React.useState(false);
@@ -25,7 +29,7 @@ const HomeScreen = () => {
 	const hideDropdown = () => setProfPicPressed(false);
 
 	// This causes ProfileUpdateScreen to open when a user
-	// not registered in "users" DB collection signs
+	// not registered in "users" DB collection signs in
 	React.useLayoutEffect(() =>
 		onSnapshot(doc(db, "users", user.uid), (docSnap) => {
 			if (!docSnap.exists()) {
@@ -33,29 +37,88 @@ const HomeScreen = () => {
 			}
 		}), []);
 
-	// This fetches profiles (other than that of current user) from DB
+	// This fetches profiles of all users not passed/matched by current
+	// user (so they only see profiles of newly registered users)
 	React.useEffect(() => {
 		let unsubscribe;
 
 		const fetchProfilesDB = async () => {
-			unsubscribe = onSnapshot(collection(db, "users"), (usersCollSnap) => {
-				// Filter out all profiles with the exception of the
-				// current user (so they won't swipe themselves)
-				const filteredUsers = usersCollSnap.docs.filter(
-					userDoc => userDoc.id !== user.uid
-				);
+			// 1. Fetch all ids of users passed by current user
+			const passesCollRef = collection(db, "users", user.uid, "passes");
+			const passesSnaps = await getDocs(passesCollRef);
+			const passedUserIds = passesSnaps.docs.map(doc => doc.id);
+			// Since an empty array can't be queried we use
+			// [""] in case a user has no passes record
+			const passedIds = passedUserIds.length ? passedUserIds : [""];
 
-				// Map each of the filtered users and return
-				// the data (i.e. field) of each profile
-				setProfiles(
-					filteredUsers.map(doc => ({ ...doc.data() }))
-				);
-			});
+			// 2. Fetch all ids of users matched by current user
+			const matchesCollRef = collection(db, "users", user.uid, "passes");
+			const matchesSnaps = await getDocs(matchesCollRef);
+			const matchedUserIds = matchesSnaps.docs.map(doc => doc.id);
+			const matchedIds = matchedUserIds.length ? matchedUserIds : [""];
+
+			unsubscribe = onSnapshot(
+				// 3. Query "users" collection and fetch only profiles of
+				// users who haven't been passed/matched by current user
+				query(
+					collection(db, "users"),
+					// [...passedIds, ...matchedIds] ==> Retrieve all
+					// ids from both arrays and merge them into one
+					where("id", "not-in", [...passedIds, ...matchedIds])
+				),
+				(queryResults) => {
+					// Filter out current user from the query results/
+					// collection (so they won't swipe themselves)
+					const filteredUsers = queryResults.docs.filter(
+						userDoc => userDoc.id !== user.uid
+					);
+
+					// Map each of the filtered users and store the
+					// data (i.e. field) of each profile as an object
+					setProfiles(
+						filteredUsers.map(doc => ({ ...doc.data() }))
+					);
+				}
+			);
 		};
 
 		fetchProfilesDB();
 		return unsubscribe;
 	}, []);
+
+	// This updates/creates new "passes" collection for a user
+	const updatePassesCollectionDB = (cardIndex) => {
+		// Check to see if the card that has been left swiped exists
+		if (!profiles[cardIndex]) {
+			return;
+		}
+
+		const profileSwiped = profiles[cardIndex];
+
+		// The flow as represented in DB:
+		// DB > users collection > current user id > passes field collection
+		// (creates new if not already there) > adds id of the profile swiped
+		// > field of the details of the user passed
+		setDoc(
+			doc(db, "users", user.uid, "passes", profileSwiped.id),
+			profileSwiped
+		);
+	};
+
+	// This updates/creates new "matches" collection for a user
+	const updateMatchesCollectionDB = (cardIndex) => {
+		// Check to see if the card that has been right swiped exists
+		if (!profiles[cardIndex]) {
+			return;
+		}
+
+		const profileSwiped = profiles[cardIndex];
+
+		setDoc(
+			doc(db, "users", user.uid, "matches", profileSwiped.id),
+			profileSwiped
+		);
+	};
 
 	return (
 		<TouchableWithoutFeedback onPress={hideDropdown}>
@@ -191,15 +254,17 @@ const HomeScreen = () => {
 							}
 						}}
 						animateCardOpacity
-						onSwipedLeft={() => {
+						onSwipedLeft={(cardIndex) => {
+							hideDropdown();
+							setNumCardSwiped(prevNum => prevNum + 1);
 							// Pass
-							hideDropdown();
-							setNumCardSwiped(prevNum => prevNum + 1);
+							updatePassesCollectionDB(cardIndex);
 						}}
-						onSwipedRight={() => {
-							// Match
+						onSwipedRight={(cardIndex) => {
 							hideDropdown();
 							setNumCardSwiped(prevNum => prevNum + 1);
+							// Match
+							updateMatchesCollectionDB(cardIndex);
 						}}
 						verticalSwipe={false}
 						renderCard={(card) => card && (
