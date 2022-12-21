@@ -16,7 +16,6 @@ import {
 
 import useAuth from "../hooks/useAuth";
 import { db } from "../firebase";
-import { async } from "@firebase/util";
 
 const HomeScreen = () => {
 	const [profPicPressed, setProfPicPressed] = React.useState(false);
@@ -37,7 +36,7 @@ const HomeScreen = () => {
 			}
 		}), []);
 
-	// This fetches profiles of all users not passed/matched by current
+	// This fetches profiles of all users not passed/liked by current
 	// user (so they only see profiles of newly registered users)
 	React.useEffect(() => {
 		let unsubscribe;
@@ -51,20 +50,20 @@ const HomeScreen = () => {
 			// [""] in case a user has no passes record
 			const passedIds = passedUserIds.length ? passedUserIds : [""];
 
-			// 2. Fetch all ids of users matched by current user
-			const matchesCollRef = collection(db, "users", user.uid, "passes");
-			const matchesSnaps = await getDocs(matchesCollRef);
-			const matchedUserIds = matchesSnaps.docs.map(doc => doc.id);
-			const matchedIds = matchedUserIds.length ? matchedUserIds : [""];
+			// 2. Fetch all ids of users liked by current user
+			const likesCollRef = collection(db, "users", user.uid, "passes");
+			const likeSnaps = await getDocs(likesCollRef);
+			const likedUserIds = likeSnaps.docs.map(doc => doc.id);
+			const likedIds = likedUserIds.length ? likedUserIds : [""];
 
 			unsubscribe = onSnapshot(
 				// 3. Query "users" collection and fetch only profiles of
-				// users who haven't been passed/matched by current user
+				// users who haven't been passed/liked by current user
 				query(
 					collection(db, "users"),
-					// [...passedIds, ...matchedIds] ==> Retrieve all
+					// [...passedIds, ...likedIds] ==> Retrieve all
 					// ids from both arrays and merge them into one
-					where("id", "not-in", [...passedIds, ...matchedIds])
+					where("id", "not-in", [...passedIds, ...likedIds])
 				),
 				(queryResults) => {
 					// Filter out current user from the query results/
@@ -105,8 +104,8 @@ const HomeScreen = () => {
 		);
 	};
 
-	// This updates/creates new "matches" collection for a user
-	const updateMatchesCollectionDB = (cardIndex) => {
+	// This updates/creates new "likes" collection for a user
+	const updateLikesCollectionDB = (cardIndex) => {
 		// Check to see if the card that has been right swiped exists
 		if (!profiles[cardIndex]) {
 			return;
@@ -115,7 +114,7 @@ const HomeScreen = () => {
 		const profileSwiped = profiles[cardIndex];
 
 		setDoc(
-			doc(db, "users", user.uid, "matches", profileSwiped.id),
+			doc(db, "users", user.uid, "likes", profileSwiped.id),
 			profileSwiped
 		);
 	};
@@ -235,7 +234,7 @@ const HomeScreen = () => {
 						stackSize={profiles.length}
 						overlayLabels={{
 							left: {
-								title: "NOPE!",
+								title: "NOPE",
 								style: {
 									label: {
 										textAlign: "right",
@@ -244,7 +243,7 @@ const HomeScreen = () => {
 								}
 							},
 							right: {
-								title: "MATCH!",
+								title: "LIKE",
 								style: {
 									label: {
 										textAlign: "left",
@@ -263,8 +262,8 @@ const HomeScreen = () => {
 						onSwipedRight={(cardIndex) => {
 							hideDropdown();
 							setNumCardSwiped(prevNum => prevNum + 1);
-							// Match
-							updateMatchesCollectionDB(cardIndex);
+							// Like
+							updateLikesCollectionDB(cardIndex);
 						}}
 						verticalSwipe={false}
 						renderCard={(card) => card && (
