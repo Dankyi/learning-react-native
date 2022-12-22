@@ -4,6 +4,7 @@ import HomeScreen from "./screens/HomeScreen";
 import ChatScreen from "./screens/ChatScreen";
 import LoginScreen from "./screens/LoginScreen";
 import ProfileUpdateScreen from "./screens/ProfileUpdateScreen";
+import MatchScreen from "./screens/MatchScreen";
 import useAuth from "./hooks/useAuth";
 
 const Stack = createNativeStackNavigator();
@@ -31,6 +32,18 @@ const StackNavigator = () => {
 						<Stack.Screen
 							name="ProfileUpdateScreen"
 							component={ProfileUpdateScreen}
+						/>
+					</Stack.Group>
+
+					<Stack.Group
+						screenOptions={{
+							presentation: "transparentModal",
+							contentStyle: { backgroundColor: "#FF5864" }
+						}}
+					>
+						<Stack.Screen
+							name="MatchScreen"
+							component={MatchScreen}
 						/>
 					</Stack.Group>
 				</>

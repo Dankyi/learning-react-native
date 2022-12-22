@@ -2,8 +2,8 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import Swiper from "react-native-deck-swiper";
 import {
-	collection, doc, getDocs, onSnapshot,
-	query, setDoc, where
+	collection, doc, getDoc, getDocs, setDoc,
+	onSnapshot, query, serverTimestamp, where
 } from "firebase/firestore";
 import {
 	AntDesign, Ionicons, FontAwesome5,
@@ -16,6 +16,7 @@ import {
 
 import useAuth from "../hooks/useAuth";
 import { db } from "../firebase";
+import generateId from "../util/generateId";
 
 const HomeScreen = () => {
 	const [profPicPressed, setProfPicPressed] = React.useState(false);
@@ -105,7 +106,7 @@ const HomeScreen = () => {
 	};
 
 	// This updates/creates new "likes" collection for a user
-	const updateLikesCollectionDB = (cardIndex) => {
+	const updateLikesCollectionDB = async (cardIndex) => {
 		// Check to see if the card that has been right swiped exists
 		if (!profiles[cardIndex]) {
 			return;
@@ -113,10 +114,44 @@ const HomeScreen = () => {
 
 		const profileSwiped = profiles[cardIndex];
 
+		// Add the profile of the user that has
+		// been liked to current users likes
 		setDoc(
 			doc(db, "users", user.uid, "likes", profileSwiped.id),
 			profileSwiped
 		);
+
+		const loggedInUserRef = doc(db, "users", user.uid);
+		const loggedInUserProfile = await (await getDoc(loggedInUserRef)).data();
+
+		// Check the "likes" of the user you liked to see if they liked you
+		// NB: Ideally this is best done in cloud utilizing cloud function
+		const docRef = doc(db, "users", profileSwiped.id, "likes", user.uid);
+		const docSnap = await getDoc(docRef);
+
+		if (docSnap.exists()) {
+			// User liked you before you liked them
+			// (i.e. MATCH FOUND) we create a MATCH
+			const matchData = {
+				users: {
+					[user.uid]: loggedInUserProfile,
+					[profileSwiped.id]: profileSwiped
+				},
+				matchedUsers: [user.uid, profileSwiped.id],
+				timestamp: serverTimestamp()
+			};
+
+			const matchId = generateId(user.uid, profileSwiped.id);
+
+			// Create a new "matches" collection (or update
+			// an existing one) adding the match data
+			setDoc(doc(db, "matches", matchId), matchData);
+
+			// Navigate to the MatchScreen with the
+			// data of the logged in user and their match
+			const matchedProfiles = { loggedInUserProfile, profileSwiped };
+			navigation.navigate("MatchScreen", matchedProfiles);
+		}
 	};
 
 	return (
