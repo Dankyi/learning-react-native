@@ -38,7 +38,10 @@ const StackNavigator = () => {
 					<Stack.Group
 						screenOptions={{
 							presentation: "transparentModal",
-							contentStyle: { backgroundColor: "#FF5864" }
+							contentStyle: {
+								backgroundColor: "#FF5864",
+								opacity: 0.95
+							}
 						}}
 					>
 						<Stack.Screen
