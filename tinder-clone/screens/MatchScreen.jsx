@@ -11,7 +11,7 @@ const MatchScreen = () => {
 			<View className="px-5 pt-20 justify-center">
 				<Image
 					className="w-full h-20"
-					source={{ uri: "https://links.papareact.com/mg9" }}
+					source={require("../assets/its-a-match.png")}
 				/>
 			</View>
 

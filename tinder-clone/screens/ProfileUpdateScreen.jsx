@@ -44,7 +44,7 @@ const ProfileUpdateScreen = () => {
 				<Image
 					className="w-full h-20"
 					resizeMode="contain"
-					source={{ uri: "https://links.papareact.com/2pf" }}
+					source={require("../assets/tinder-logo2.png")}
 				/>
 
 				<Text className="text-sm font-semibold self-center">

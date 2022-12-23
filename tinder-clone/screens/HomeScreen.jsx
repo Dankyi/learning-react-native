@@ -52,7 +52,7 @@ const HomeScreen = () => {
 			const passedIds = passedUserIds.length ? passedUserIds : [""];
 
 			// 2. Fetch all ids of users liked by current user
-			const likesCollRef = collection(db, "users", user.uid, "passes");
+			const likesCollRef = collection(db, "users", user.uid, "likes");
 			const likeSnaps = await getDocs(likesCollRef);
 			const likedUserIds = likeSnaps.docs.map(doc => doc.id);
 			const likedIds = likedUserIds.length ? likedUserIds : [""];
@@ -220,7 +220,7 @@ const HomeScreen = () => {
 					>
 						<Image
 							className="w-12 h-12"
-							source={require("../assets/tinder-logo.png")}
+							source={require("../assets/tinder-logo1.png")}
 						/>
 					</TouchableOpacity>
 
@@ -257,7 +257,7 @@ const HomeScreen = () => {
 
 						<Image
 							className="w-48 h-48"
-							source={{ uri: "https://links.papareact.com/6gb" }}
+							source={require("../assets/sad-face.png")}
 						/>
 					</View>
 
