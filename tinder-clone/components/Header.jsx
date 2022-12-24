@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Foundation, Ionicons } from "@expo/vector-icons";
 
-const Header = ({ title, callEnabled }) => {
+const Header = ({ title, photoURL, callEnabled }) => {
 	const navigation = useNavigation();
 	return (
 		<View className="flex-row items-center justify-between p-2">
@@ -18,9 +18,19 @@ const Header = ({ title, callEnabled }) => {
 					/>
 				</TouchableOpacity>
 
-				<Text className="text-lg font-semibold pl-2">
-					{title}
-				</Text>
+				<View className="flex-row items-center">
+					{photoURL && (
+						<Image
+							className="w-8 h-8 rounded-full bg-slate-400"
+							source={{ uri: photoURL }}
+							resizeMode="contain"
+						/>
+					)}
+
+					<Text className="text-lg font-semibold pl-2">
+						{title}
+					</Text>
+				</View>
 			</View>
 
 			{callEnabled && (
