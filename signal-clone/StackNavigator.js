@@ -13,6 +13,7 @@ const StackNavigator = () => {
 		}}
 		>
 			<Stack.Screen
+				options={{ title: "Login" }}
 				name="LoginScreen"
 				component={LoginScreen}
 			/>
