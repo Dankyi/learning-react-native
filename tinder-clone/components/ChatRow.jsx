@@ -24,6 +24,7 @@ const ChatRow = ({ matchDetails }) => {
 		);
 	}, []);
 
+	// This fetches the last message for a particular match id
 	React.useEffect(() =>
 		onSnapshot(
 			query(

@@ -10,6 +10,8 @@ const ChatList = () => {
 	const [matches, setMatches] = React.useState([]);
 	const { user } = useAuth();
 
+	// This fetches all matches for logged
+	// in user and store each in an array
 	React.useEffect(() =>
 		onSnapshot(
 			query(

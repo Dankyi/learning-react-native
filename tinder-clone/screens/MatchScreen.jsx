@@ -10,7 +10,7 @@ const MatchScreen = () => {
 		<View className="h-full pt-20">
 			<View className="px-5 pt-20 justify-center">
 				<Image
-					className="w-full h-20"
+					className="w-full h-24"
 					source={require("../assets/its-a-match.png")}
 				/>
 			</View>
@@ -23,11 +23,13 @@ const MatchScreen = () => {
 				<Image
 					className="w-32 h-32 rounded-full"
 					source={{ uri: profileSwiped.photoURL }}
+					resizeMode="contain"
 				/>
 
 				<Image
 					className="w-32 h-32 rounded-full"
 					source={{ uri: loggedInUserProfile.photoURL }}
+					resizeMode="contain"
 				/>
 			</View>
 
